@@ -26,6 +26,7 @@ RSpec.describe Array do
     expect(numbers.drop(8)).to eq [9, 10]
 
     expect(numbers.take_while {|n| n<4}).to eq [1, 2, 3]
+    expect(numbers.drop_while {|n| n < 5}).to eq [5, 6, 7, 8, 9, 10]
 
     # Getting random elements
     expect(numbers).to include numbers.sample
@@ -178,7 +179,6 @@ RSpec.describe Array do
 
   specify "filtering items" do
     expect(numbers.reject {|n| n > 5}).to eq [1, 2, 3, 4, 5]
-    expect(numbers.drop_while {|n| n < 5}).to eq [5, 6, 7, 8, 9, 10]
   end
 
   specify "sorting items" do
