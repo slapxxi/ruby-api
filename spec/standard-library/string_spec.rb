@@ -1,7 +1,20 @@
 RSpec.describe String do
-  specify "adding substrings" do
-    expect('abc'.insert(1, 'zyx')).to eq 'azyxbc'
-    expect('world'.prepend('Hello, ')).to eq 'Hello, world'
+  let(:string) { 'Example string' }
+
+  it "has length" do
+    expect('abc'.length).to eq 3
+    expect('abc'.size).to eq 3
+    expect('abc'.bytesize).to eq 3
+  end
+
+  specify "adding strings" do
+    expect('concatenated'+' string').to eq 'concatenated string'
+
+    expect('abc'.insert 1, 'zyx').to eq 'azyxbc'
+    expect('world'.prepend 'Hello, ').to eq 'Hello, world'
+
+    expect(''.concat('name')).to eq 'name'
+    expect(''.concat(97)).to eq 'a'
   end
 
   specify "deleting characters" do
@@ -12,7 +25,7 @@ RSpec.describe String do
     expect('   abc'.lstrip).to eq 'abc'
     expect('abc   '.rstrip).to eq 'abc'
 
-    expect('aabbcc something'.delete('abc ')).to eq 'something'
+    expect('aabbcc something'.delete 'abc ').to eq 'something'
 
     expect('abc'.clear).to eq ''
   end
@@ -21,18 +34,9 @@ RSpec.describe String do
     expect("A\n 'string'".dump).to eq '"A\n \'string\'"'
   end
 
-  specify "concatenating" do
-    expect('concatenated'+' string').to eq 'concatenated string'
-
-    expect(''.concat('name')).to eq 'name'
-    expect(''.concat(97)).to eq 'a'
-  end
-
   specify "counting characters" do
-    example = 'Lorem ipsum dolor sit amet.'
-
-    expect(example.count('l')).to eq 1
-    expect(example.count('a-zA-Z')).to eq example.delete(' .').length
+    expect(string.count 'l').to eq 1
+    expect(string.count('a-zA-Z ')).to eq string.length
   end
 
   specify "finding substrings" do
@@ -85,11 +89,6 @@ RSpec.describe String do
     expect('string'.ascii_only?).to eq true
   end
 
-  specify "determining the size" do
-    expect('abc'.bytesize).to eq 3
-    expect('abc'.size).to eq 3
-    expect('abc'.length).to eq 3
-  end
 
   specify "changing case" do
     expect('word'.upcase).to eq 'WORD'

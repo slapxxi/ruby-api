@@ -1,35 +1,37 @@
 RSpec.describe Proc do
   specify "creating a lambda" do
-    l = lambda {|required| :called}
+    l = lambda {|required| required}
 
     expect(l).to be_lambda
     expect { l.call }.to raise_error
-    expect(l.call :require).to eq :called
+    expect(l.call :required).to eq :required
   end
 
   specify "creating a proc" do
-    p = proc {|not_required| :called}
+    p = proc {|not_required| not_required}
 
     expect(p).not_to be_lambda
-    expect(p.call).to eq :called
+    expect { p.call }.not_to raise_error
+    expect(p.call).to be_nil
   end
 
-  specify "calling with []" do
-    p = proc {:called}
+  it "can be called with [] or .()" do
+    p = proc { |param| param }
 
-    expect(p[]).to eq :called
+    expect( p[true] ).to be true
+    expect( p.(true) ).to be true
   end
 
-  specify "using proc with case statement" do
+  it "can be used with `when`" do
     even = proc { |o| o.even? }
     odd = proc { |o| o.odd? }
 
-    case 2
-    when even then result = true
-    when odd then result = false
+    result = case 8
+      when even then true
+      when odd then false
     end
 
-    expect(result).to eq true
+    expect(result).to be true
   end
 
   specify "using binding" do

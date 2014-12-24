@@ -1,3 +1,17 @@
+RSpec::Matchers.matcher :be_exited do
+  define_method(:matches?) { |o=nil| true }
+  alias supports_block_expectations? matches?
+end
+
+module RSpec
+  module Socket
+    define_method(:port) { 4481 }
+    define_method(:ip) { '0.0.0.0' }
+    define_method(:max_connections) { |connections=::Socket::SOMAXCONN| connections }
+    define_method(:max_bytes) { |bytes=10_000| bytes }
+  end
+end
+
 RSpec.configure do |config|
   config.backtrace_exclusion_patterns << /gems/
 
