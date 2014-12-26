@@ -4,6 +4,7 @@ source "https://rubygems.org"
 gem 'benchmark-ips'
 
 gem 'rspec'
+gem 'rsense'
 
 gem 'guard-rspec'
 gem 'growl'
