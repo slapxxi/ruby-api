@@ -3,7 +3,7 @@ RSpec::Matchers.matcher :be_exited do
   alias supports_block_expectations? matches?
 end
 
-module RSpec
+module Helpers
   module Socket
     define_method(:port) { 4481 }
     define_method(:ip) { '0.0.0.0' }

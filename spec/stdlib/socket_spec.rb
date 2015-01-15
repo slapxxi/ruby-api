@@ -1,29 +1,18 @@
 require "socket"
 
 RSpec.describe Socket do
-  include RSpec::Socket
+  include Helpers::Socket
 
   let(:socket) { Socket.new :INET, :STREAM }
   let(:address) { Socket.pack_sockaddr_in port, ip }
 
   after(:each) { socket.close }
 
-  describe "TCPSocket" do
-    it "can be created with constants" do
-      expect(socket).to be_an IO
-      expect(socket).to receive :bind
+  specify "listening for incoming connections" do
+    expect(socket).to receive(:listen)
 
-      socket.bind address
-    end
-  end
-
-  describe "listening for incoming connections" do
-    it "listens" do
-      expect(socket).to receive(:listen)
-
-      socket.bind address
-      socket.listen max_connections
-    end
+    socket.bind address
+    socket.listen max_connections
   end
 
   describe "binding" do
